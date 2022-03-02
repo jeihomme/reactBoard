@@ -122,18 +122,23 @@ class LoginForm extends Component {
       password: this.loginPw.value
     };
     axios
-      .post("http://localhost:8080/member/login", send_param)
+      // .post("http://localhost:8080/member/login", send_param)
+      .post("http://localhost:8000/blog/blog_login/", send_param)
       //정상 수행
       .then(returnData => {
+        console.log("returnData.data : " + JSON.stringify(returnData.data) );
+        console.log("returnData.data.result : " + JSON.stringify(returnData.data.result) );
+        // console.log(JSON.stringify(returnData) );
+        // console.log( returnData.data.result );
         if (returnData.data.message) {
           // console.log("login_id:" + returnData.data._id);
           $.cookie("login_id", returnData.data._id, { expires: 1 });
           $.cookie("login_email", returnData.data.email, { expires: 1 });
-          alert(returnData.data.message);
           //reload를 하지 않으면, 비동기식 통신인 axios여서 reload필요
-          window.location.reload();
+          // window.location.reload();
         } else {
-          alert(returnData.data.message);
+          // alert(returnData.data.message);
+          console.log( returnData.data.message );
         }
       })
       //에러
